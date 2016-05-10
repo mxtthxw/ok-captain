@@ -1,0 +1,11 @@
+<%= form_for @boat do |f| %>
+<%= f.label :name %>
+<%= f.text_field :name %>
+<br>
+<%= f.label :location %>
+<%= f.text_field :location %>
+<br>
+<%= f.label :capacity %>
+<%= f.number_field :capacity %>
+<%= f.submit %>
+<% end %>
