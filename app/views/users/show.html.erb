@@ -1,15 +1,18 @@
-<%= @user.email %>
-<br>
-<hr>
-<h2>My Boats:</h2>
-<br>
-<% @boats.each do |boat| %>
-<%= link_to boat.name, boat_path(boat.id) %>
-<br>
-<%= boat.location %>
-<br>
-<%= boat.capacity %>
-<hr>
+<% if current_user %>
+	<%= @user.email %>
+	<br>
+	<hr>
+	<h2>My Boats:</h2>
+	<br>
+	<% @boats.each do |boat| %>
+	<%= link_to boat.name, boat_path(boat.id) %>
+	<br>
+	<%= boat.location %>
+	<br>
+	<%= boat.capacity %>
+	<hr>
+	<% end %>
+	<hr>
+<% else %>
 <% end %>
-<hr>
 <%= link_to "Go Home", '/' %>

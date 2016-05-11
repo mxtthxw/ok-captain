@@ -1,2 +1,14 @@
-<h1>Boats#edit</h1>
-<p>Find me in app/views/boats/edit.html.erb</p>
+	Edit Your Boat:
+	<br>
+	<%= form_for @boat do |f| %>
+	<%= f.label :name %>
+	<%= f.text_field :name %>
+	<br>
+	<%= f.label :location %>
+	<%= f.text_field :location %>
+	<br>
+	<%= f.label :capacity %>
+	<%= f.number_field :capacity %>
+	<%= f.hidden_field :user_id, :value => current_user.id %>
+	<%= f.submit %>
+	<% end %>

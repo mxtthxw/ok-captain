@@ -19,9 +19,14 @@ class JobsController < ApplicationController
   end
 
   def edit
+    @job = Job.find(params[:id])
   end
 
   def update
+    @job = Job.find(params[:id])
+    @job.update(job_params)
+    # way to exclude user_id and boat_id above?
+    redirect_to boat_path(@job.boat_id)
   end
 
   def show

@@ -17,12 +17,20 @@ class BoatsController < ApplicationController
   end
 
   def edit
+    @boat = Boat.find(params[:id])
   end
 
   def update
+    @boat = Boat.find(params[:id])
+    if @boat.update(boat_params)
+      redirect_to boat_path(@boat)
+    else
+      render 'new'
+    end
   end
 
   def show
+    current_user
     @boat = Boat.find(params[:id])
     @job = Job.new
     @jobs = Job.where(boat_id: @boat.id)

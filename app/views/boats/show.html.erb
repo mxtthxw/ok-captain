@@ -6,7 +6,14 @@
 <br>
 <%= @boat.user_id %>
 <br>
+
+<% if @boat.user_id == @current_user.id %>
+<%= link_to "Edit This Boat", edit_boat_path %>
+<% else %>
+<% end %>
+
 <hr>
+
 Hire Me:
 <br>
 <%= form_for @job do |f| %>
@@ -39,21 +46,27 @@ Hire Me:
     <% end %>
   </ul>
 <% end %>
+
 <hr>
 Current Jobs:
 <br>
 <% @jobs.each do |job| %>
-<%= job.name %>
-<br>
-<%= job.description %>
-<br>
-<%= job.cost %>
-<br>
-<%= job.containers %>
-<br>
-<%= job.origin %>
-<br>
-<%= job.destination %>
+	<%= job.name %>
+	<br>
+	<%= job.description %>
+	<br>
+	<%= job.cost %>
+	<br>
+	<%= job.containers %>
+	<br>
+	<%= job.origin %>
+	<br>
+	<%= job.destination %>
+	<br>
+	<% if @boat.user_id == @current_user.id %>
+		<%= link_to "Edit This Job", edit_job_path(job.id) %>
+	<% else %>
+	<% end %>
 <% end %>
 <br>
 <hr>
