@@ -1,2 +1,32 @@
-<h1>Jobs#new</h1>
-<p>Find me in app/views/jobs/new.html.erb</p>
+Create a New Job:
+<br>
+<%= form_for @job do |f| %>
+<%= f.label :name %>
+<%= f.text_field :name %>
+<br>
+<%= f.label :description %>
+<%= f.text_field :description %>
+<br>
+<%= f.label :containers %>
+<%= f.number_field :containers %>
+<br>
+<%= f.label :cost %>
+<%= f.number_field :cost, :class => 'text_field', :step => 0.01 %>
+<br>
+<%= f.label :origin %>
+<%= f.text_field :origin %>
+<br>
+<%= f.label :destination %>
+<%= f.text_field :destination %>
+<br>
+<%= f.hidden_field :user_id, :value => current_user.id %>
+<%= f.hidden_field :boat_id, :value => @job.boat_id %>
+<%= f.submit %>
+<% end %>
+<% if @job.errors.full_messages.any? %>
+  <ul>
+    <% @job.errors.full_messages.each do |error_message| %>
+      <li><%= error_message%></li> <br />
+    <% end %>
+  </ul>
+<% end %>

@@ -4,6 +4,7 @@ class BoatsController < ApplicationController
   end
 
   def create
+    current_user
     @boat = Boat.new(boat_params)
     if @boat.save
       redirect_to boat_path(@boat)
@@ -23,14 +24,17 @@ class BoatsController < ApplicationController
 
   def show
     @boat = Boat.find(params[:id])
+    @job = Job.new
+    @jobs = Job.where(boat_id: @boat.id)
   end
 
   def index
+    @boats = Boat.all
   end
 
   private
 
   def boat_params
-    params.require(:boat).permit(:name, :location, :email, :capacity)
+    params.require(:boat).permit(:name, :location, :email, :capacity, :user_id)
   end
 end

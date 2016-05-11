@@ -3,3 +3,58 @@
 <%= @boat.location %>
 <br>
 <%= @boat.capacity %>
+<br>
+<%= @boat.user_id %>
+<br>
+<hr>
+Hire Me:
+<br>
+<%= form_for @job do |f| %>
+<%= f.label :name %>
+<%= f.text_field :name %>
+<br>
+<%= f.label :description %>
+<%= f.text_field :description %>
+<br>
+<%= f.label :containers %>
+<%= f.number_field :containers %>
+<br>
+<%= f.label :cost %>
+<%= f.number_field :cost, :class => 'text_field', :step => 0.01 %>
+<br>
+<%= f.label :origin %>
+<%= f.text_field :origin %>
+<br>
+<%= f.label :destination %>
+<%= f.text_field :destination %>
+<br>
+<%= f.hidden_field :user_id, :value => current_user.id %>
+<%= f.hidden_field :boat_id, :value => @boat.id %>
+<%= f.submit %>
+<% end %>
+<% if @job.errors.full_messages.any? %>
+  <ul>
+    <% @job.errors.full_messages.each do |error_message| %>
+      <li><%= error_message%></li> <br />
+    <% end %>
+  </ul>
+<% end %>
+<hr>
+Current Jobs:
+<br>
+<% @jobs.each do |job| %>
+<%= job.name %>
+<br>
+<%= job.description %>
+<br>
+<%= job.cost %>
+<br>
+<%= job.containers %>
+<br>
+<%= job.origin %>
+<br>
+<%= job.destination %>
+<% end %>
+<br>
+<hr>
+<%= link_to "Go Home", '/' %>
