@@ -1,13 +1,13 @@
-<%= @boat.name %>
+Boat Name: <%= @boat.name %>
 <br>
-<%= @boat.location %>
+Location: <%= @boat.location %>
 <br>
-<%= @boat.capacity %>
+Capacity: <%= @boat.capacity %>
 <br>
-<%= @boat.user_id %>
+Belongs To: <a href="../users/<%= @boat.user_id %>"><%= @boat.user.email %></a>
 <br>
 
-<% if @boat.user_id == @current_user.id %>
+<% if current_admin || @boat.user_id == @current_user.id %>
 <%= link_to "Edit This Boat", edit_boat_path %>
 <% else %>
 <% end %>
@@ -35,7 +35,11 @@ Hire Me:
 <%= f.label :destination %>
 <%= f.text_field :destination %>
 <br>
-<%= f.hidden_field :user_id, :value => current_user.id %>
+<% if current_admin %>
+	<%= f.hidden_field :user_id, :value => current_admin.id %>
+<% else %>
+	<%= f.hidden_field :user_id, :value => current_user.id %>
+<% end %>
 <%= f.hidden_field :boat_id, :value => @boat.id %>
 <%= f.submit %>
 <% end %>
@@ -64,7 +68,7 @@ Current Jobs:
 	<br>
 	Destination: <%= job.destination %>
 	<br>
-	<% if @boat.user_id == @current_user.id %>
+	<% if current_admin || @boat.user_id == @current_user.id %>
 		<%= link_to "Edit This Job", edit_job_path(job.id) %>
 	<% else %>
 	<% end %>

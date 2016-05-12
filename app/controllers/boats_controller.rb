@@ -5,6 +5,7 @@ class BoatsController < ApplicationController
 
   def create
     current_user
+    current_admin
     @boat = Boat.new(boat_params)
     if @boat.save
       redirect_to boat_path(@boat)
@@ -31,6 +32,7 @@ class BoatsController < ApplicationController
 
   def show
     current_user
+    current_admin
     @boat = Boat.find(params[:id])
     @job = Job.new
     @jobs = Job.where(boat_id: @boat.id)

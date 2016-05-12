@@ -9,6 +9,10 @@
 	<br>
 	<%= f.label :capacity %>
 	<%= f.number_field :capacity %>
-	<%= f.hidden_field :user_id, :value => current_user.id %>
+	<% if current_admin %>
+		<%= f.hidden_field :user_id, :value => current_admin.id %>
+	<% else %>
+		<%= f.hidden_field :user_id, :value => current_user.id %>
+	<% end %>
 	<%= f.submit %>
 	<% end %>

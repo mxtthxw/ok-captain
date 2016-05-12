@@ -6,6 +6,7 @@ class JobsController < ApplicationController
 
   def create
     current_user
+    current_admin
     @job = Job.new(job_params)
     if @job.save
       # @boat = Boat.find(@job.boat_id)

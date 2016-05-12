@@ -1,4 +1,4 @@
-<% if current_user %>
+<% if current_user || current_admin %>
 	<%= form_for @boat do |f| %>
 	<%= f.label :name %>
 	<%= f.text_field :name %>
@@ -8,7 +8,11 @@
 	<br>
 	<%= f.label :capacity %>
 	<%= f.number_field :capacity %>
-	<%= f.hidden_field :user_id, :value => current_user.id %>
+	<% if current_admin %>
+		<%= f.hidden_field :user_id, :value => current_admin.id %>
+	<% else %>
+		<%= f.hidden_field :user_id, :value => current_user.id %>
+	<% end %>
 	<%= f.submit %>
 	<% end %>
 	<br>

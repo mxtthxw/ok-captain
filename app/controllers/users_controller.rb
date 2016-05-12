@@ -11,8 +11,12 @@ class UsersController < ApplicationController
 
   def show
     if current_user
-      @user = User.find(params[:id])
-      @boats = Boat.where(user_id: @user_id)
+      if params[:id] == "login"
+        redirect_to new_user_session
+      else
+        @user = User.find(params[:id])
+        @boats = Boat.where(user_id: @user_id)
+      end
     else
     end
   end
