@@ -2,7 +2,8 @@ OK CAPTAINS
 <hr>
 <br>
 <% @users.each do |user| %>
-<%= user.email %>
+<a href="users/<%= user.id %>"><%= user.email %></a>
+<!-- <%= link_to user.email, users_path(user) %>  -->
 <br>
 <% end %>
 <br>

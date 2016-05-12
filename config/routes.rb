@@ -2,12 +2,12 @@ Rails.application.routes.draw do
 
   root "home#index"
 
-  if
+  # if
     get "users/login" => "devise/sessions#new"
-  elsif 
+  # elsif 
     get "users/:id" => "users#show"
-  else
-  end
+  # else
+  # end
 
   get "users" => "users#index"
 

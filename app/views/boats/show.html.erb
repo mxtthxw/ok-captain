@@ -50,24 +50,25 @@ Hire Me:
 <hr>
 Current Jobs:
 <br>
+<br>
 <% @jobs.each do |job| %>
-	<%= job.name %>
+	Job Name: <%= job.name %>
 	<br>
-	<%= job.description %>
+	Cargo Description: <%= job.description %>
 	<br>
-	<%= job.cost %>
+	Price: $<%= job.cost %>0
 	<br>
-	<%= job.containers %>
+	Container Count: <%= job.containers %>
 	<br>
-	<%= job.origin %>
+	Origin: <%= job.origin %>
 	<br>
-	<%= job.destination %>
+	Destination: <%= job.destination %>
 	<br>
 	<% if @boat.user_id == @current_user.id %>
 		<%= link_to "Edit This Job", edit_job_path(job.id) %>
 	<% else %>
 	<% end %>
+	<hr>
 <% end %>
 <br>
-<hr>
 <%= link_to "Go Home", '/' %>
