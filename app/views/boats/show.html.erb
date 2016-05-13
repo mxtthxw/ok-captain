@@ -17,10 +17,15 @@ Capacity: <%= @boat.capacity %>
 
 <!-- button to follow/unfollow boat -->
 <% if !@follow %>
+	<div class="follow-button">
 	<%= button_to "Follow This Boat", {controller: "follows", action: "create", boat_id: @boat.id}, remote: true %>
+	</div>
 <% else %>
+	<div class="unfollow-button">
 	<%= button_to "Unfollow This Boat", follow_path(@follow), method: :delete, remote: true %>
+	</div>
 <% end %>
+<!-- ^ might need to change the button_to parameters to incorporate UJS/AJAX - possibly action is completing (in controller) before js functions can run? -->
 
 <%= @boat.name %> has <%= @follows.count %> follower<% if @follows.count != 1 %>s<% end %>!
 <br>
@@ -57,6 +62,7 @@ Capacity: <%= @boat.capacity %>
 		<%= f.label :destination %>
 		<%= f.text_field :destination %>
 		<% if current_admin %>
+		<!-- ^ change these two to f.select / drop-down menus with list of cities? -->
 			<%= f.hidden_field :user_id, :value => current_admin.id %>
 		<% else %>
 			<%= f.hidden_field :user_id, :value => current_user.id %>
@@ -96,12 +102,12 @@ Capacity: <%= @boat.capacity %>
 			<%= link_to "Edit This Job", edit_job_path(job.id) %>
 			<br>
 			<%= link_to "Delete This Job", job_path(job), method: :delete %>
-		<% else %>
 		<% end %>
 		<hr>
 	<% end %>
 <% end %>
 <br>
+
 <!-- link to go home -->
 <%= link_to "Return to the Boat List", boats_path %>
 <br>

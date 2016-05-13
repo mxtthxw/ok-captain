@@ -12,15 +12,9 @@ class UsersController < ApplicationController
   def show
     current_user
     current_admin
-    @fave_boats = @current_user.vessels
-    if current_user
-      if params[:id] == "login"
-        redirect_to new_user_session
-      else
-        @user = User.find(params[:id])
-        @boats = Boat.where(user_id: @user_id)
-      end
-    end
+    @user = User.find(params[:id])
+    @fave_boats = @user.vessels
+    @boats = Boat.where(user_id: @user_id)
   end
 
   def index

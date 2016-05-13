@@ -1,0 +1,7 @@
+$('.follow-button').click(function() {
+	$(this).replaceWith( '<div class="unfollow-button"><button type="button" follow_path="@follow" method=":delete" data-remote="true">Unfollow This Boat</button></div>' )
+});
+
+$('.unfollow-button').click(function() {
+	$(this).replaceWith( '<div class="follow-button"><button type="button" controller="follows" action="create" boat_id="@boat.id" remote="true">Follow This Boat</div>')
+});

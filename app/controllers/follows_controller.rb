@@ -10,6 +10,8 @@ class FollowsController < ApplicationController
   			flash[:notice] = "You followed this boat!"
   			format.html { redirect_to :back, notice: "You followed this boat!"}
   			format.json { render :show, status: :created, location: @follow}
+        format.js
+        # ^ doesn't seem to be working
   		else
   			format.html { render :new }
   			format.json { render json: @follow.errors, status: :unprocessable_entity }
