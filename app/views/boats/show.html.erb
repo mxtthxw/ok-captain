@@ -1,3 +1,4 @@
+<!-- boat name & info -->
 Boat Name: <%= @boat.name %>
 <br>
 <%= image_tag @boat.boat_pic.url(:medium) %>
@@ -7,20 +8,33 @@ Location: <%= @boat.location %>
 Capacity: <%= @boat.capacity %>
 <br>
 <% if @boat.user %>
-Belongs To: <a href="../users/<%= @boat.user_id %>"><%= @boat.user.email %></a>
+	Belongs To: <a href="../users/<%= @boat.user_id %>"><%= @boat.user.email %></a>
 <% else %>
-This boat has no captain!
+	This boat has no captain!
 <% end %>
+
 <br>
 
-<% if current_admin || @boat.user_id == @current_user.id %>
-<%= link_to "Edit This Boat", edit_boat_path %>
+<!-- button to follow/unfollow boat -->
+<% if !@follow %>
+	<%= button_to "Follow This Boat", {controller: "follows", action: "create", boat_id: @boat.id}, remote: true %>
+<% else %>
+	<%= button_to "Unfollow This Boat", follow_path(@follow), method: :delete, remote: true %>
+<% end %>
+
+<%= @boat.name %> has <%= @follows.count %> follower<% if @follows.count != 1 %>s<% end %>!
 <br>
-<%= link_to "Delete This Boat", boat_path(@boat), method: :delete %>
+
+<!-- buttons to edit/delete boat -->
+<% if current_admin || @boat.user_id == @current_user.id %>
+	<%= link_to "Edit This Boat", edit_boat_path %>
+	<br>
+	<%= link_to "Delete This Boat", boat_path(@boat), method: :delete %>
 <% end %>
 
 <hr>
 
+<!-- form for new job -->
 <% if current_admin || @boat.user_id == @current_user.id %>
 	Hire Me:
 	<br>
@@ -60,29 +74,35 @@ This boat has no captain!
 		<% end %>
 <% end %>
 
-Current Jobs:
-<br>
-<br>
-<% @jobs.each do |job| %>
-	Job Name: <%= job.name %>
+<!-- list of current jobs -->
+<% if @jobs.count > 0 %>
+	Current Jobs:
 	<br>
-	Cargo Description: <%= job.description %>
 	<br>
-	Price: $<%= job.cost %>0
-	<br>
-	Container Count: <%= job.containers %>
-	<br>
-	Origin: <%= job.origin %>
-	<br>
-	Destination: <%= job.destination %>
-	<br>
-	<% if current_admin || @boat.user_id == @current_user.id %>
-		<%= link_to "Edit This Job", edit_job_path(job.id) %>
+	<% @jobs.each do |job| %>
+		Job Name: <%= job.name %>
 		<br>
-		<%= link_to "Delete This Job", job_path(job), method: :delete %>
-	<% else %>
+		Cargo Description: <%= job.description %>
+		<br>
+		Price: $<%= job.cost %>0
+		<br>
+		Container Count: <%= job.containers %>
+		<br>
+		Origin: <%= job.origin %>
+		<br>
+		Destination: <%= job.destination %>
+		<br>
+		<% if current_admin || @boat.user_id == @current_user.id %>
+			<%= link_to "Edit This Job", edit_job_path(job.id) %>
+			<br>
+			<%= link_to "Delete This Job", job_path(job), method: :delete %>
+		<% else %>
+		<% end %>
+		<hr>
 	<% end %>
-	<hr>
 <% end %>
+<br>
+<!-- link to go home -->
+<%= link_to "Return to the Boat List", boats_path %>
 <br>
 <%= link_to "Go Home", '/' %>

@@ -2,12 +2,9 @@ Rails.application.routes.draw do
 
   root "home#index"
 
-  if
     get "users/login" => "devise/sessions#new"
-  elsif
     get "users/:id" => "users#show"
-  else
-  end
+
 
   get "users" => "users#index"
 
@@ -15,7 +12,9 @@ Rails.application.routes.draw do
 
   resources :boats
 
-  resources :jobs
+  resources :jobs, except: [:show, :index]
+
+  resources :follows, only: [:create, :destroy]
 
   devise_for :users
 

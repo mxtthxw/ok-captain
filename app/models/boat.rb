@@ -1,6 +1,8 @@
 class Boat < ActiveRecord::Base
 	belongs_to :user
 	has_many :jobs
+	has_many :follows
+	has_many :admirers, through: :follows, source: :user
 
 	has_attached_file :boat_pic, :styles => { :medium => "500x500>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
 	validates_attachment_content_type :boat_pic, :content_type => /\Aimage\/.*\Z/

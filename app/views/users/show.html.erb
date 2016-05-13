@@ -1,18 +1,33 @@
-<% if current_user %>
-	<%= @user.email %>
-	<br>
-	<hr>
-	<h2>My Boats:</h2>
-	<br>
-	<% @boats.each do |boat| %>
+<%= @user.email %>
+<br>
+<hr>
+<h2>My Boats:</h2>
+<br>
+<% @boats.each do |boat| %>
 	<%= link_to boat.name, boat_path(boat.id) %>
 	<br>
 	<%= boat.location %>
 	<br>
 	<%= boat.capacity %>
 	<hr>
+<% end %>
+	
+<h2>Boats I'm Following:</h2>
+<% @fave_boats.each do |fave| %>
+	Boat Name: <%= link_to fave.name, boat_path(fave.id) %>
+	<br>
+	<%= image_tag fave.boat_pic.url(:thumb) %>
+	<br>
+	Location: <%= fave.location %>
+	<br>
+	Capacity: <%= fave.capacity %>
+	<br>
+	<% if fave.user %>
+		Belongs To: <a href="../users/<%= fave.user_id %>"><%= fave.user.email %></a>
+	<% else %>
+		This boat has no captain!
 	<% end %>
+	<br>
 	<hr>
-<% else %>
 <% end %>
 <%= link_to "Go Home", '/' %>

@@ -10,6 +10,9 @@ class UsersController < ApplicationController
   end
 
   def show
+    current_user
+    current_admin
+    @fave_boats = @current_user.vessels
     if current_user
       if params[:id] == "login"
         redirect_to new_user_session
@@ -17,7 +20,6 @@ class UsersController < ApplicationController
         @user = User.find(params[:id])
         @boats = Boat.where(user_id: @user_id)
       end
-    else
     end
   end
 

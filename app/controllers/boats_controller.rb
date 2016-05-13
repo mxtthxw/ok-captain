@@ -4,8 +4,6 @@ class BoatsController < ApplicationController
   end
 
   def create
-    current_user
-    current_admin
     @boat = Boat.new(boat_params)
     if @boat.save
       flash[:notice] = "Welcome to the fleet, #{@boat.name}!"
@@ -41,6 +39,9 @@ class BoatsController < ApplicationController
     @boat = Boat.find(params[:id])
     @job = Job.new
     @jobs = Job.where(boat_id: @boat.id)
+    @follow = Follow.where(user_id: @current_user.id, boat_id: @boat.id).first
+    puts @follow
+    @follows = Follow.where(boat_id: @boat.id)
   end
 
   def index
