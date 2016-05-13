@@ -1,57 +1,65 @@
 Boat Name: <%= @boat.name %>
 <br>
+<%= image_tag @boat.boat_pic.url(:medium) %>
+<br>
 Location: <%= @boat.location %>
 <br>
 Capacity: <%= @boat.capacity %>
 <br>
+<% if @boat.user %>
 Belongs To: <a href="../users/<%= @boat.user_id %>"><%= @boat.user.email %></a>
+<% else %>
+This boat has no captain!
+<% end %>
 <br>
 
 <% if current_admin || @boat.user_id == @current_user.id %>
 <%= link_to "Edit This Boat", edit_boat_path %>
-<% else %>
+<br>
+<%= link_to "Delete This Boat", boat_path(@boat), method: :delete %>
 <% end %>
 
 <hr>
 
-Hire Me:
-<br>
-<%= form_for @job do |f| %>
-<%= f.label :name %>
-<%= f.text_field :name %>
-<br>
-<%= f.label :description %>
-<%= f.text_field :description %>
-<br>
-<%= f.label :containers %>
-<%= f.number_field :containers %>
-<br>
-<%= f.label :cost %>
-<%= f.number_field :cost, :class => 'text_field', :step => 0.01 %>
-<br>
-<%= f.label :origin %>
-<%= f.text_field :origin %>
-<br>
-<%= f.label :destination %>
-<%= f.text_field :destination %>
-<br>
-<% if current_admin %>
-	<%= f.hidden_field :user_id, :value => current_admin.id %>
-<% else %>
-	<%= f.hidden_field :user_id, :value => current_user.id %>
-<% end %>
-<%= f.hidden_field :boat_id, :value => @boat.id %>
-<%= f.submit %>
-<% end %>
-<% if @job.errors.full_messages.any? %>
-  <ul>
-    <% @job.errors.full_messages.each do |error_message| %>
-      <li><%= error_message%></li> <br />
-    <% end %>
-  </ul>
+<% if current_admin || @boat.user_id == @current_user.id %>
+	Hire Me:
+	<br>
+	<%= form_for @job do |f| %>
+		<%= f.label :name %>
+		<%= f.text_field :name %>
+		<br>
+		<%= f.label :description %>
+		<%= f.text_field :description %>
+		<br>
+		<%= f.label :containers %>
+		<%= f.number_field :containers %>
+		<br>
+		<%= f.label :cost %>
+		<%= f.number_field :cost, :class => 'text_field', :step => 0.01 %>
+		<br>
+		<%= f.label :origin %>
+		<%= f.text_field :origin %>
+		<br>
+		<%= f.label :destination %>
+		<%= f.text_field :destination %>
+		<% if current_admin %>
+			<%= f.hidden_field :user_id, :value => current_admin.id %>
+		<% else %>
+			<%= f.hidden_field :user_id, :value => current_user.id %>
+		<% end %>
+		<%= f.hidden_field :boat_id, :value => @boat.id %>
+		<%= f.submit %>
+		<hr>
+	<% end %>
+		<% if @job.errors.full_messages.any? %>
+		  <ul>
+		    <% @job.errors.full_messages.each do |error_message| %>
+		      <li><%= error_message%></li> <br />
+		    <% end %>
+		  </ul>
+		<% end %>
 <% end %>
 
-<hr>
 Current Jobs:
 <br>
 <br>
@@ -70,6 +78,8 @@ Current Jobs:
 	<br>
 	<% if current_admin || @boat.user_id == @current_user.id %>
 		<%= link_to "Edit This Job", edit_job_path(job.id) %>
+		<br>
+		<%= link_to "Delete This Job", job_path(job), method: :delete %>
 	<% else %>
 	<% end %>
 	<hr>

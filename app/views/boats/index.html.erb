@@ -1,7 +1,14 @@
 SO MANY BOATS
+<br>
+<% if current_user || current_admin %>
+	<%= link_to "Create a New Boat", new_boat_path %>
+	<br>
+<% else %>
+<% end %>
 <hr>
 <br>
 <% @boats.each do |boat| %>
+<%= image_tag boat.boat_pic.url(:thumb) %>
 <%= link_to boat.name, boat_path(boat.id) %>
 <br>
 <%= boat.location %>

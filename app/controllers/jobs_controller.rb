@@ -17,6 +17,15 @@ class JobsController < ApplicationController
   end
 
   def destroy
+    # @boat = Boat.find(params[:id])
+    # @job = Job.where(boat_id: @boat.id)
+    # @job.destroy
+    # redirect_to boat_path(@boat)
+    @job = Job.find(params[:id])
+    @boat_id = @job.boat_id
+    @job.destroy
+    flash[:notice] = "A job well done!"
+    redirect_to boat_path(@boat_id)
   end
 
   def edit

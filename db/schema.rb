@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160512195834) do
+ActiveRecord::Schema.define(version: 20160513183000) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -35,9 +35,13 @@ ActiveRecord::Schema.define(version: 20160512195834) do
     t.string   "name"
     t.integer  "capacity"
     t.string   "location"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
     t.integer  "user_id"
+    t.string   "boat_pic_file_name"
+    t.string   "boat_pic_content_type"
+    t.integer  "boat_pic_file_size"
+    t.datetime "boat_pic_updated_at"
   end
 
   create_table "jobs", force: :cascade do |t|

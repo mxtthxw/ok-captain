@@ -8,6 +8,7 @@ class BoatsController < ApplicationController
     current_admin
     @boat = Boat.new(boat_params)
     if @boat.save
+      flash[:notice] = "Welcome to the fleet, #{@boat.name}!"
       redirect_to boat_path(@boat)
     else
       render 'new'
@@ -15,6 +16,10 @@ class BoatsController < ApplicationController
   end
 
   def destroy
+    @boat = Boat.find(params[:id])
+    @boat.destroy
+    flash[:notice] = "Bon voyage, #{@boat.name}!"
+    redirect_to boats_path
   end
 
   def edit
@@ -45,6 +50,6 @@ class BoatsController < ApplicationController
   private
 
   def boat_params
-    params.require(:boat).permit(:name, :location, :email, :capacity, :user_id)
+    params.require(:boat).permit(:name, :location, :email, :capacity, :user_id, :boat_pic)
   end
 end
