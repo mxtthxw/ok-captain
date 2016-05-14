@@ -1,0 +1,51 @@
+body {
+	margin: 0 auto;
+	background-color: white;
+	text-align: center;
+		background-image: url(http://www.passion-estampes.com/toiles-BD/corto-maltese/toile-pratt-corto-marin-100x70.jpg);
+	background-size: 100%;
+	background-attachment: fixed;
+	font-family: 'Chicle', cursive;
+	font-size: 20px;
+}
+
+
+/*nav bar*/
+
+li {
+	float: left;
+	/*width: 30%;
+	max-width: 200px;
+	min-width: 155px;*/
+	margin-left: 200px;
+
+}
+
+ li a {
+	display: block;
+	color: black;
+	padding: 14px 16px;
+	text-decoration: none;
+	text-align: center;
+	/*width: 400px;*/
+	/*width:100%;*/
+}
+
+li a:hover {
+	background-color: #5DADE2;
+	color: white;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: white;
+
+}
+
+.active {
+	background-color: #7FB3D5;
+	color: white;
+}

@@ -1,22 +1,32 @@
-<h1>OK Captain</h1>
-<br>
-<% if !current_user && !current_admin %>
-	<%= link_to "Sign Up or Log In", new_user_registration_path %>
-	<br>
-	<%= link_to "Sign Up or Log In (Admin)", new_admin_registration_path %>
-	<br>
-<% else %>
-<% end %>
-<%= link_to "User List", users_path %>
-<br>
-<%= link_to "Boat List", boats_path %>
-<br>
-<% if current_user || current_admin %>
-	<%= link_to "Create a New Boat", new_boat_path %>
-	<br>
-<% else %>
-<% end %>
-<% if current_user || current_admin %>
-<%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
-<% else %>
-<% end %>
+
+<div id="homebody">
+
+	<h1>OK Captain</h1>
+	<nav>
+	<ul>
+
+			<% if !current_user && !current_admin %>
+				<li><%= link_to "Sign Up or Log In", new_user_registration_path %></li>
+				
+				<li><%= link_to "Sign Up or Log In (Admin)", new_admin_registration_path %></li>
+				
+			<% else %>
+			<% end %>
+			<li><%= link_to "User List", users_path %></li>
+			
+			<li><%= link_to "Boat List", boats_path %></li>
+			
+			<% if current_user || current_admin %>
+				<li><%= link_to "Create a New Boat", new_boat_path %></li>
+			
+			<% else %>
+			<% end %>
+			<% if current_user || current_admin %>
+			<li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
+			<% else %>
+			<% end %>
+	</ul>
+
+	</nav>
+
+</div>
