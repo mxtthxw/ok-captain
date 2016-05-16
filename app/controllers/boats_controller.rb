@@ -39,7 +39,9 @@ class BoatsController < ApplicationController
     @boat = Boat.find(params[:id])
     @job = Job.new
     @jobs = Job.where(boat_id: @boat.id)
-    @follow = Follow.where(user_id: @current_user.id, boat_id: @boat.id).first
+    if current_user
+      @follow = Follow.where(user_id: @current_user.id, boat_id: @boat.id).first
+    end
     puts @follow
     @follows = Follow.where(boat_id: @boat.id)
   end

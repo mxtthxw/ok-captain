@@ -16,14 +16,16 @@ Capacity: <%= @boat.capacity %>
 <br>
 
 <!-- button to follow/unfollow boat -->
-<% if !@follow %>
-	<div class="follow-button">
-	<%= button_to "Follow This Boat", {controller: "follows", action: "create", boat_id: @boat.id}, remote: true %>
-	</div>
-<% else %>
-	<div class="unfollow-button">
-	<%= button_to "Unfollow This Boat", follow_path(@follow), method: :delete, remote: true %>
-	</div>
+<% if current_user || current_admin %>
+	<% if !@follow %>
+		<div class="follow-button">
+		<%= button_to "Follow This Boat", {controller: "follows", action: "create", boat_id: @boat.id}, remote: true %>
+		</div>
+	<% else %>
+		<div class="unfollow-button">
+		<%= button_to "Unfollow This Boat", follow_path(@follow), method: :delete, remote: true %>
+		</div>
+	<% end %>
 <% end %>
 <!-- ^ might need to change the button_to parameters to incorporate UJS/AJAX - possibly action is completing (in controller) before js functions can run? -->
 
@@ -31,53 +33,57 @@ Capacity: <%= @boat.capacity %>
 <br>
 
 <!-- buttons to edit/delete boat -->
-<% if current_admin || @boat.user_id == @current_user.id %>
-	<%= link_to "Edit This Boat", edit_boat_path %>
-	<br>
-	<%= link_to "Delete This Boat", boat_path(@boat), method: :delete %>
+<% if current_user || current_admin %>
+	<% if current_admin || @boat.user_id == @current_user.id %>
+		<%= link_to "Edit This Boat", edit_boat_path %>
+		<br>
+		<%= link_to "Delete This Boat", boat_path(@boat), method: :delete %>
+	<% end %>
 <% end %>
 
 <hr>
 
 <!-- form for new job -->
-<% if current_admin || @boat.user_id == @current_user.id %>
-	Hire Me:
-	<br>
-	<%= form_for @job do |f| %>
-		<%= f.label :name %>
-		<%= f.text_field :name %>
+<% if current_user || current_admin %>
+	<% if current_admin || @boat.user_id == @current_user.id %>
+		Hire Me:
 		<br>
-		<%= f.label :description %>
-		<%= f.text_field :description %>
-		<br>
-		<%= f.label :containers %>
-		<%= f.number_field :containers %>
-		<br>
-		<%= f.label :cost %>
-		<%= f.number_field :cost, :class => 'text_field', :step => 0.01 %>
-		<br>
-		<%= f.label :origin %>
-		<%= f.text_field :origin %>
-		<br>
-		<%= f.label :destination %>
-		<%= f.text_field :destination %>
-		<% if current_admin %>
-		<!-- ^ change these two to f.select / drop-down menus with list of cities? -->
-			<%= f.hidden_field :user_id, :value => current_admin.id %>
-		<% else %>
-			<%= f.hidden_field :user_id, :value => current_user.id %>
+		<%= form_for @job do |f| %>
+			<%= f.label :name %>
+			<%= f.text_field :name %>
+			<br>
+			<%= f.label :description %>
+			<%= f.text_field :description %>
+			<br>
+			<%= f.label :containers %>
+			<%= f.number_field :containers %>
+			<br>
+			<%= f.label :cost %>
+			<%= f.number_field :cost, :class => 'text_field', :step => 0.01 %>
+			<br>
+			<%= f.label :origin %>
+			<%= f.text_field :origin %>
+			<br>
+			<%= f.label :destination %>
+			<%= f.text_field :destination %>
+			<% if current_admin %>
+			<!-- ^ change these two to f.select / drop-down menus with list of cities? -->
+				<%= f.hidden_field :user_id, :value => current_admin.id %>
+			<% else %>
+				<%= f.hidden_field :user_id, :value => current_user.id %>
+			<% end %>
+			<%= f.hidden_field :boat_id, :value => @boat.id %>
+			<%= f.submit %>
+			<hr>
 		<% end %>
-		<%= f.hidden_field :boat_id, :value => @boat.id %>
-		<%= f.submit %>
-		<hr>
+			<% if @job.errors.full_messages.any? %>
+			  <ul>
+			    <% @job.errors.full_messages.each do |error_message| %>
+			      <li><%= error_message%></li> <br />
+			    <% end %>
+			  </ul>
+			<% end %>
 	<% end %>
-		<% if @job.errors.full_messages.any? %>
-		  <ul>
-		    <% @job.errors.full_messages.each do |error_message| %>
-		      <li><%= error_message%></li> <br />
-		    <% end %>
-		  </ul>
-		<% end %>
 <% end %>
 
 <!-- list of current jobs -->
@@ -98,10 +104,12 @@ Capacity: <%= @boat.capacity %>
 		<br>
 		Destination: <%= job.destination %>
 		<br>
-		<% if current_admin || @boat.user_id == @current_user.id %>
-			<%= link_to "Edit This Job", edit_job_path(job.id) %>
-			<br>
-			<%= link_to "Delete This Job", job_path(job), method: :delete %>
+		<% if current_user || current_admin %>
+			<% if current_admin || @boat.user_id == @current_user.id %>
+				<%= link_to "Edit This Job", edit_job_path(job.id) %>
+				<br>
+				<%= link_to "Delete This Job", job_path(job), method: :delete %>
+			<% end %>
 		<% end %>
 		<hr>
 	<% end %>
